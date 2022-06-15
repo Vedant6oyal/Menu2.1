@@ -1,0 +1,25 @@
+const icons = {
+    drink: require("../assets/icons/drink.png"),
+    fries: require("../assets/icons/fries.png"),
+    hamburger: require("../assets/icons/hamburger.png"),
+    hotdog: require("../assets/icons/hotdog.png"),
+    noodle: require("../assets/icons/noodle.png"),
+    pizza: require("../assets/icons/pizza.png"),
+    salad: require("../assets/icons/salad.png"),
+    rice_bowl: require("../assets/icons/rice-bowl.png"),
+    sushi: require("../assets/icons/sushi.png"),
+    vegmark: require("../assets/icons/vegmark.png"),
+    nonvegmark: require("../assets/icons/nonvegmark.png"),
+    foodIcon: require("../assets/icons/foodIcon.png"),
+    drinkIcon: require("../assets/icons/drinkWhite.png"),
+    vegitableJuiceIcon: require("../assets/icons/vegitableJuice.png"),
+    soupIcon: require("../assets/icons/soup.png"),
+    foodIconWhite: require("../assets/icons/foodIconWhite.png"),
+    drinkIconBlue: require("../assets/icons/drinkIconBlue.png"),
+    donut:require("../assets/icons/donut.png"),
+    logoIcon: require("../assets/icons/logoIcon.png"),
+    foodLabelIcon: require("../assets/icons/foodLabelIcon.png"),
+    logoHeader: require("../assets/icons/logoHeader.png"),
+};
+
+export default icons;
