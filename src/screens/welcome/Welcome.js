@@ -9,7 +9,7 @@ import {
   AppBar,
   CssBaseline,
 } from "@material-ui/core";
-import { KeyboardArrowDown, ShoppingBasket } from "@material-ui/icons";
+import { ShoppingBasket } from "@material-ui/icons";
 import clsx from "clsx";
 import Slider from "react-slick";
 import { colors, icons } from "../../theme";
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
     justifyContent: "center",
     height: 62,
-    marginTop: 47,
+    marginTop: 56,
   },
   labelContainer: {
     width: "100%",
@@ -58,19 +58,9 @@ const useStyles = makeStyles((theme) => ({
   sliderContainer: {
     background: "rgba(255, 166, 71, .20)",
     display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
     height: 61,
-  },
-  sliderOuter: {
-    width: "calc(100% - 61px)",
-  },
-  swiperContainer: {
-    display: "flex",
-    alignItems: "center",
-    height: 92,
-    width: "100%",
-    justifyContent: "space-between",
+    width: '100%',
+    alignItems: 'center',
   },
   listContainer: {
     marginTop: 62,
@@ -95,6 +85,7 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "center",
     marginLeft: "25%",
     cursor: "pointer",
+    zIndex: 20,
     [theme.breakpoints.down("md")]: {
       width: "70%",
       marginLeft: "15%",
@@ -152,46 +143,6 @@ const useStyles = makeStyles((theme) => ({
       margin: 0,
     },
   },
-  filterContainer: {
-    background: "rgba(255, 166, 71, 0.2)",
-    height: 61,
-    width: 61,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: "none",
-  },
-  filterIconOuter: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-    background: colors.whiteColor,
-    position: "relative",
-  },
-  foodIconStyle: {
-    width: 31,
-    height: 31,
-  },
-  downIconContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    border: "1px solid #C8C8C8",
-    background: colors.whiteColor,
-    position: "absolute",
-    height: 12,
-    width: 12,
-    borderRadius: 10,
-    right: -6,
-  },
-  downIconStyle: {
-    color: colors.orangeLight,
-    fontSize: 12,
-  },
   categoryIcon: {
     width: 30,
     height: 30,
@@ -202,32 +153,12 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 7,
     color: colors.orangeColor,
   },
-  drinkIconOuter: {
-    cursor: "pointer",
-    height: 40,
-    width: 40,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 7,
-  },
-  foodListOpen: {
-    position: "absolute",
-    width: 40,
-    height: 87,
-    background: colors.orangeLight,
-    top: 9,
-    borderRadius: 45,
-  },
   dialogContainer: {
     padding: 0,
     paddingTop: 0,
     "&:first-child": {
       paddingTop: 0,
     },
-  },
-  blueColor: {
-    color: "#2151A1",
   },
   icon: {
     borderRadius: 2,
@@ -450,7 +381,6 @@ const Welcome = () => {
   const [isShowList, setIsShowList] = useState(false);
   const [activeState, setActiveState] = useState(1);
   const [foodMenuList, setFoodMenuList] = useState(foodList);
-  const [isOpenDrop, setIsOpenDrop] = useState(false);
   const [isAddPopup, setIsAddPopup] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("AllFood");
   const [categories, setCategories] = useState(categoryFoodData);
@@ -722,29 +652,12 @@ const Welcome = () => {
     setIsShowList(!isShowList);
   };
 
-  const handleFoodSelect = () => {
-    setIsOpenDrop(false);
-    setActiveState(1);
-  };
-
-  const handleDrinkSelect = () => {
-    setIsOpenDrop(false);
-    setActiveState(2);
-  };
-
-  const handleSeconDrinkSelect = () => {
-    setIsOpenDrop(false);
-    setActiveState(2);
-  };
-
-  const handleSecondFoodSelect = () => {
-    setIsOpenDrop(false);
-    setActiveState(1);
-  };
   const handleSelectCategory = (selectedCat) => {
-    setIsOpenDrop(false);
     setSelectedCategory(selectedCat);
   };
+
+  console.log('selectedCategory', selectedCategory);
+  console.log('categories', categories)
 
   const categoryHeader = () => (
     <AppBar position="fixed" className={clsx(classes.appBar)}>
@@ -752,151 +665,53 @@ const Welcome = () => {
       <div className={classes.fullWidth}>
         {activeState === 1 ? (
           <div className={classes.sliderContainer}>
-            <div className={classes.sliderOuter}>
-              <Slider {...settingCategory}>
-                {categories.map((item) => (
-                  <div
-                    className="categoryContainer"
-                    style={{ marginRight: 10 }}
-                    onClick={() => handleSelectCategory(item.name)}
-                  >
-                    <img
-                      src={item.icon}
-                      alt="pImage"
-                      className={classes.categoryIcon}
-                    />
-                    <Typography className={classes.categoryName}>
-                      {item.name}
-                    </Typography>
-                  </div>
-                ))}
-              </Slider>
-            </div>
-
-            <div className={classes.filterContainer}>
-              {isOpenDrop ? (
-                <div className={classes.foodListOpen}>
-                  <div
-                    className={classes.filterIconOuter}
-                    onClick={() => handleFoodSelect()}
-                  >
-                    <img
-                      src={icons.foodIcon}
-                      alt="foodIcon"
-                      className={classes.foodIconStyle}
-                    />
-                    <div className={classes.downIconContainer}>
-                      <KeyboardArrowDown className={classes.downIconStyle} />
-                    </div>
-                  </div>
-
-                  <div
-                    className={classes.drinkIconOuter}
-                    onClick={() => handleDrinkSelect()}
-                  >
-                    <img src={icons.drinkIcon} alt="drink" />
-                  </div>
-                </div>
-              ) : (
+            <Slider {...settingCategory}>
+              {categories.map((item) => (
                 <div
-                  className={classes.filterIconOuter}
-                  onClick={() => setIsOpenDrop(!isOpenDrop)}
+                  className={item.name === selectedCategory ?
+                    ['categoryContainer', 'categoryActiveContainer'].join(' ') :
+                    'categoryContainer'
+                  }
+                  onClick={() => handleSelectCategory(item.name)}
                 >
                   <img
-                    src={icons.foodIcon}
-                    alt="foodIcon"
-                    className={classes.foodIconStyle}
+                    src={item.icon}
+                    alt="pImage"
+                    className={classes.categoryIcon}
                   />
-                  <div className={classes.downIconContainer}>
-                    <KeyboardArrowDown className={classes.downIconStyle} />
-                  </div>
+                  <Typography className={classes.categoryName} style={item.name === selectedCategory ? { color: colors.whiteColor } : {}}>
+                    {item.name}
+                  </Typography>
                 </div>
-              )}
-            </div>
+              ))}
+            </Slider>
           </div>
         ) : (
           <div
             className={classes.sliderContainer}
             style={{ background: "rgba(33, 81, 161, .20)" }}
           >
-            <div className={classes.sliderOuter}>
-              <Slider {...settingCategory}>
-                {categories.map((item, index) => (
-                  <div
-                    className="categoryContainer"
-                    style={{ marginRight: 10 }}
-                    key={`cat-${index}`}
-                    onClick={() => handleSelectCategory(item.name)}
-                  >
-                    <img
-                      src={item.icon}
-                      alt="pImage"
-                      className={classes.categoryIcon}
-                    />
-                    <Typography className={classes.categoryName}>
-                      {item.name}
-                    </Typography>
-                  </div>
-                ))}
-              </Slider>
-            </div>
-
-            <div
-              className={classes.filterContainer}
-              style={{ background: "rgb(177, 204, 251)" }}
-            >
-              {isOpenDrop ? (
+            <Slider {...settingCategory}>
+              {categories.map((item, index) => (
                 <div
-                  className={classes.foodListOpen}
-                  style={{ background: "#2151A1" }}
-                >
-                  <div
-                    className={classes.filterIconOuter}
-                    onClick={() => handleSeconDrinkSelect()}
-                  >
-                    <img
-                      src={icons.drinkIconBlue}
-                      alt="foodIcon"
-                      className={classes.foodIconStyle}
-                    />
-                    <div className={classes.downIconContainer}>
-                      <KeyboardArrowDown
-                        className={[
-                          classes.downIconStyle,
-                          classes.blueColor,
-                        ].join(" ")}
-                      />
-                    </div>
-                  </div>
-
-                  <div
-                    className={classes.drinkIconOuter}
-                    onClick={() => handleSecondFoodSelect()}
-                  >
-                    <img src={icons.foodIconWhite} alt="drink" />
-                  </div>
-                </div>
-              ) : (
-                <div
-                  className={classes.filterIconOuter}
-                  onClick={() => setIsOpenDrop(!isOpenDrop)}
+                  className={item.name === selectedCategory ?
+                    ['categoryContainer', 'categoryDrinkContainer'].join(' ') :
+                    'categoryContainer'
+                  }
+                  key={`cat-${index}`}
+                  onClick={() => handleSelectCategory(item.name)}
                 >
                   <img
-                    src={icons.drinkIconBlue}
-                    alt="foodIcon"
-                    className={classes.foodIconStyle}
+                    src={item.icon}
+                    alt="pImage"
+                    className={classes.categoryIcon}
                   />
-                  <div className={classes.downIconContainer}>
-                    <KeyboardArrowDown
-                      className={[
-                        classes.downIconStyle,
-                        classes.blueColor,
-                      ].join(" ")}
-                    />
-                  </div>
+                  <Typography className={classes.categoryName} style={item.name === selectedCategory ? { color: colors.whiteColor } : {}}>
+                    {item.name}
+                  </Typography>
                 </div>
-              )}
-            </div>
+              ))}
+            </Slider>
           </div>
         )}
       </div>
@@ -904,7 +719,7 @@ const Welcome = () => {
   );
 
   return (
-    <Header>
+    <Header activeState={activeState} handleActiveState={setActiveState}>
       <div className={classes.container}>
         {categoryHeader()}
         <div className={classes.listContainer}>

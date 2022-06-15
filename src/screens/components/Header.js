@@ -1,15 +1,17 @@
 import React from "react";
-import { makeStyles, AppBar, CssBaseline } from "@material-ui/core";
+import { makeStyles, AppBar, CssBaseline, Typography } from "@material-ui/core";
 import clsx from "clsx";
-import { icons } from "../../theme";
+import { colors, icons } from "../../theme";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
     display: "flex",
     alignItems: "center",
-    height: 47,
+    height: 56,
     paddingLeft: "2.33%",
+    justifyContent: 'space-between',
+    paddingRight: "2.33%",
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
@@ -19,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#fff",
     boxShadow: "0 0px 0px 0 rgba(0, 0, 0, 0.16)",
     justifyContent: "center",
-    height: 47,
+    height: 56,
   },
   logoStyle: {
     height: 36,
@@ -32,9 +34,48 @@ const useStyles = makeStyles((theme) => ({
     }),
     zIndex: 3,
   },
+  buttonContainer: {
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    height: 29,
+    border: `1px solid ${colors.blueColor}`,
+    paddingLeft: 10,
+    paddingRight: 10,
+    borderRadius: 5,
+    marginLeft: 8,
+  },
+  drinkIcon: {
+    height: 16,
+    width: 14,
+  },
+  foodIcon: {
+    height: 21,
+    width: 21,
+  },
+  buttonText: {
+    fontFamily: 'Poppins',
+    color: colors.blueColor,
+    fontSize: 14,
+    marginLeft: 10,
+  },
+  flCenter: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  foodBorderColor: {
+    borderColor: colors.orangeLight,
+  },
+  foodTextColor: {
+    color: colors.orangeLight,
+  },
 }));
 
-const Header = ({ children }) => {
+const Header = ({
+  children,
+  handleActiveState,
+  activeState,
+}) => {
   const classes = useStyles();
   return (
     <div>
@@ -46,13 +87,35 @@ const Header = ({ children }) => {
             alt="logo"
             className={classes.logoStyle}
           />
+
+          <div className={classes.flCenter}>
+            <div
+              className={[classes.buttonContainer, classes.foodBorderColor].join(' ')}
+              style={activeState === 1 ? { background: colors.orangeLight, } : {}}
+              onClick={() => handleActiveState(1)}
+            >
+              <img src={activeState === 1 ? icons.foodIconWhite : icons.foodIcon}
+                className={classes.foodIcon} alt="drink"
+              />
+              <Typography className={[classes.buttonText, classes.foodTextColor].join(' ')} style={activeState === 1 ? { color: colors.whiteColor } : {}}>Food</Typography>
+            </div>
+
+            <div
+              className={classes.buttonContainer}
+              style={activeState === 2 ? { background: colors.blueColor, } : {}}
+              onClick={() => handleActiveState(2)}
+            >
+              <img src={activeState === 2 ? icons.drinkIcon : icons.drinkIconBlue} className={classes.drinkIcon} alt="drink" />
+              <Typography className={classes.buttonText} style={activeState === 2 ? { color: colors.whiteColor } : {}}>Drink</Typography>
+            </div>
+          </div>
         </div>
       </AppBar>
 
       <main
         className={clsx(classes.content)}
         style={{
-          marginTop: 47,
+          marginTop: 56,
           paddingTop: 0,
           position: "absolute",
           width: "100%",

@@ -9,6 +9,7 @@ const colors = {
     greenColor: '#017F01',
     borderColor: '#C4C4C4',
     transparent: "transparent",
+    blueColor: '#2151A1',
   };
   
   export default colors;

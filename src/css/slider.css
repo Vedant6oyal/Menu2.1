@@ -47,6 +47,14 @@
     width: auto !important;
 }
 
+.categoryActiveContainer {
+  background-color: #FF7A3D;
+}
+
+.categoryDrinkContainer {
+  background-color: #2151A1;
+}
+
   .slick-right-arrow {
     width: 30px;
     height: 30px;
