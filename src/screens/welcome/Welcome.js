@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   makeStyles,
   Typography,
@@ -193,6 +193,11 @@ const useStyles = makeStyles((theme) => ({
       content: '""',
     },
   },
+  scrollOuter: {
+    display: 'flex',
+    overflow: 'scroll',
+    scrollBehavior: 'smooth'
+  }
 }));
 
 const categoryFoodData = [
@@ -377,6 +382,7 @@ const settingCategory = {
 
 const Welcome = () => {
   const classes = useStyles();
+  const scrollRef = useRef();
   const [selectedData, setSelectedSelected] = useState([]);
   const [isShowList, setIsShowList] = useState(false);
   const [activeState, setActiveState] = useState(1);
@@ -652,20 +658,30 @@ const Welcome = () => {
     setIsShowList(!isShowList);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   const handleSelectCategory = (selectedCat) => {
     setSelectedCategory(selectedCat);
+    scrollToTop()
   };
 
   console.log('selectedCategory', selectedCategory);
   console.log('categories', categories)
 
+
+
   const categoryHeader = () => (
     <AppBar position="fixed" className={clsx(classes.appBar)}>
       <CssBaseline />
-      <div className={classes.fullWidth}>
+      <div className={[classes.fullWidth, 'scrollSchedular'].join(' ')}>
         {activeState === 1 ? (
           <div className={classes.sliderContainer}>
-            <Slider {...settingCategory}>
+            <div className={classes.scrollOuter}>
               {categories.map((item) => (
                 <div
                   className={item.name === selectedCategory ?
@@ -684,14 +700,14 @@ const Welcome = () => {
                   </Typography>
                 </div>
               ))}
-            </Slider>
+            </div>
           </div>
         ) : (
           <div
             className={classes.sliderContainer}
             style={{ background: "rgba(33, 81, 161, .20)" }}
           >
-            <Slider {...settingCategory}>
+            <div className={classes.scrollOuter}>
               {categories.map((item, index) => (
                 <div
                   className={item.name === selectedCategory ?
@@ -711,7 +727,7 @@ const Welcome = () => {
                   </Typography>
                 </div>
               ))}
-            </Slider>
+            </div>
           </div>
         )}
       </div>
@@ -720,6 +736,7 @@ const Welcome = () => {
 
   return (
     <Header activeState={activeState} handleActiveState={setActiveState}>
+      <div ref={scrollRef} />
       <div className={classes.container}>
         {categoryHeader()}
         <div className={classes.listContainer}>

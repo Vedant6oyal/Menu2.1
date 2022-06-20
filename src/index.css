@@ -16,3 +16,9 @@ code {
   border-radius: 20px;
   overflow: hidden;
 }
+
+.scrollSchedular ::-webkit-scrollbar {
+  height: 0px !important;
+  width: 0px !important;
+  background:rgba(249, 244, 244, 0.54) !important;
+}
